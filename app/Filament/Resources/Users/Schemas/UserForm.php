@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Users\Schemas;
 
 use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
 
 class UserForm
 {
@@ -10,7 +11,21 @@ class UserForm
     {
         return $schema
             ->components([
-                //
+                TextInput::make('name')
+                    ->required()
+                    ->maxLength(255),
+
+                TextInput::make('email')
+                    ->email()
+                    ->required()
+                    ->unique(ignoreRecord: true) // Tambahan: Email harus unik di database
+                    ->maxLength(255),
+
+                TextInput::make('password')
+                    ->password()
+                    ->required()
+                    ->minLength(6) // Tambahan: Minimal 6 karakter sesuai tugas
+                    ->dehydrated(fn ($state) => filled($state)), // Hanya simpan jika password diisi
             ]);
     }
 }

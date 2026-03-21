@@ -18,9 +18,11 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    // Poin J nomor 2: Sudah benar menggunakan Heroicon::UserGroup
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::UserGroup; 
 
-    protected static ?string $recordTitleAttribute = 'fanani';
+    // Ubah dari 'fanani' menjadi 'name' agar pencarian berfungsi
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {
