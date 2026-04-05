@@ -21,47 +21,65 @@ class PostForm
     {
         return $schema
             ->components([
-                //section 1 - post details
+                // section 1 - post details
                 Section::make("Post Details")
                     ->description("Fill in the details of the post")
-                    // ->icon(Heroicon::RocketLaunch)
                     ->icon('heroicon-o-document-text')
                     ->schema([
-                //Grouping fields into 2 columns
-                Group::make([
-                    TextInput::make('title')
-                        ->rules(["required", "min:3", "max:10"])
-                        ->maxLength(225),
-                    TextInput::make('slug'),
-                    Select::make('category_id')
-                    ->relationship("category", "name")
-                    ->preload()
-                    ->searchable(),
-                    ColorPicker::make("color"),
-                    ])->columns(2),
+                        // Grouping fields into 2 columns
+                        Group::make([
+                            // POIN 1: Title minimal 5 karakter 
+                            // POIN 3: Custom message untuk title 
+                            TextInput::make("title")
+                                ->rules(["required", "min:5", "max:255"])
+                                ->validationMessages([
+                                    'min' => 'Judul harus minimal 5 karakter bos!', 
+                                ]),
 
-                    MarkdownEditor::make("content"),
+                            // POIN 1: Slug unik & minimal 3 karakter 
+                            // POIN 3: Custom message untuk slug [cite: 258, 476]
+                            TextInput::make("slug")
+                                ->required()
+                                ->unique()
+                                ->rules(['min:3'])
+                                ->validationMessages([ 
+                                    'unique' => 'Slug sudah dipakai, cari yang lain ya.',
+                                    'min' => 'Slug kependekan, minimal 3 huruf.',
+                                ]),
+
+                            // POIN 1: Category wajib dipilih 
+                            Select::make('category_id')
+                                ->relationship("category", "name")
+                                ->preload()
+                                ->required()
+                                ->searchable(),
+
+                            ColorPicker::make("color"),
+                        ])->columns(2),
+
+                        MarkdownEditor::make("content"),
                     ])->columnSpan(2),
 
-                    //Grouping fields into 2 columns
-                    Group::make([ 
-
-                    //section 2 - image
+                // Grouping sidebar
+                Group::make([ 
+                    // section 2 - image
                     Section::make("Image Upload")
                         ->schema([
+                            // POIN 1: Image wajib diupload 
                             FileUpload::make("image")
+                                ->required()
                                 ->disk("public")
                                 ->directory("posts"),
                         ]),
 
-                    //section 3 - meta
+                    // section 3 - meta
                     Section::make("Meta Information")
                         ->schema([
                             TagsInput::make("tags"),
                             Checkbox::make("published"),
                             DateTimePicker::make("published_at"),
-                    ]),
-                            ])->columnSpan(1)
+                        ]),
+                ])->columnSpan(1)
             ])->columns(3);
     }
 }
