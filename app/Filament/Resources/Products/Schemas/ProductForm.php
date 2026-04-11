@@ -57,6 +57,7 @@ class ProductForm
                         Checkbox::make('is_featured'),
                     ]),
             ])
+            ->skippable()
             ->columnSpanFull()
             ->submitAction(
                 Action::make('save')
