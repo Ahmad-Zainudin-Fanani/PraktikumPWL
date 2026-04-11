@@ -10,6 +10,7 @@ use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Checkbox;
+use Filament\Actions\Action;
 
 
 class ProductForm
@@ -56,7 +57,14 @@ class ProductForm
                         Checkbox::make('is_featured'),
                     ]),
             ])
-            ->columnSpanFull(),
+            ->columnSpanFull()
+            ->submitAction(
+                Action::make('save')
+                    ->label('Save Product')
+                    ->button()
+                    ->color('primary')
+                    ->submit('save')
+            )
         ]);
     }
 }
