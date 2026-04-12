@@ -15,47 +15,47 @@ class ProductInfolist
     public static function configure(Schema $schema): Schema
 {
     return $schema->components([
-        // SATU BLOK TABS UTAMA [cite: 31, 85]
         Tabs::make('Product Tabs')
+            // Poin 3: Ubah tampilan menjadi vertical
+            ->vertical()
             ->tabs([
 
-                // TAB 1: Detail Dasar [cite: 30, 33]
+                // Poin 4: Tambahkan icon berbeda (Information Circle)
                 Tab::make('Product Details')
                     ->icon('heroicon-o-information-circle')
                     ->schema([
                         TextEntry::make('name')
                             ->label('Product Name')
                             ->weight('bold')
-                            ->color('primary'), 
-                        TextEntry::make('id')
-                            ->label('Product ID'),
+                            ->color('primary'),
                         TextEntry::make('sku')
                             ->label('Product SKU')
                             ->badge()
-                            ->color('success'), 
+                            ->color('success'),
                         TextEntry::make('description')
-                            ->label('Product Description'), 
-                        TextEntry::make('created_at')
-                            ->label('Product Creation Date')
-                            ->date('d M Y')
-                            ->color('info'),
+                            ->label('Product Description'),
                     ]),
 
-                // TAB 2: Harga & Stok
+                // TAB 2 dengan Badge Dinamis
                 Tab::make('Pricing & Stock')
-                    ->icon('heroicon-o-currency-dollar')
+                    // Poin 4: Icon berbeda (Currency Dollar)
+                    ->icon('heroicon-o-currency-dollar') 
+                    // Poin 1: Badge dinamis berdasarkan jumlah stok
+                    ->badge(fn ($record) => $record->stock) 
+                    // Poin 2: Warna badge berbeda (misal: warning/info)
+                    ->badgeColor('warning') 
                     ->schema([
                         TextEntry::make('price')
                             ->label('Product Price')
-                            ->weight('bold')
-                            ->color('primary')
-                            ->icon('heroicon-s-currency-dollar'),
+                            ->money('IDR')
+                            ->weight('bold'),
                         TextEntry::make('stock')
-                            ->label('Product Stock'),
+                            ->label('Current Stock'),
                     ]),
 
-                // TAB 3: Media & Status
+                // TAB 3
                 Tab::make('Image and Status')
+                    // Poin 4: Icon berbeda (Photo)
                     ->icon('heroicon-o-photo')
                     ->schema([
                         ImageEntry::make('image')
@@ -64,11 +64,7 @@ class ProductInfolist
                         IconEntry::make('is_active')
                             ->label('Is Active?')
                             ->boolean(),
-                        IconEntry::make('is_featured')
-                            ->label('Is Featured?')
-                            ->boolean(),
                     ]),
-
             ])
             ->columnSpanFull(),
     ]);
