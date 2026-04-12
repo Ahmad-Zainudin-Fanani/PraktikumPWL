@@ -9,6 +9,7 @@ use Filament\Actions\ViewAction;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
 
 
 class ProductsTable
@@ -24,6 +25,12 @@ class ProductsTable
                 TextColumn::make('stock'),
                 ImageColumn::make('image')
                     ->disk('public'),
+
+                // --- TUGAS 3: BADGE/ICON STATUS ---
+                IconColumn::make('is_active')
+                    ->label('Aktif')
+                    ->boolean()
+                    ->sortable(),
             ])
             ->filters([
                 //
