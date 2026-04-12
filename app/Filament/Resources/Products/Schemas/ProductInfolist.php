@@ -12,7 +12,7 @@ class ProductInfolist
     {
         return $schema
             ->components([
-                //
+                // SECTION 1: PRODUCT INFO
                 Section::make('Product Info')
                 ->description('')
                 ->schema([
@@ -30,7 +30,18 @@ class ProductInfolist
                         ->label('Product Description')
                         ->columnSpanFull(),
                     ])
-                ->columnSpanFull()
+                ->columnSpanFull(),
+
+                // SECTION 2: PRICING & STOCK
+                Section::make('Pricing & Stock')
+                ->schema([ 
+                    TextEntry::make('price')
+                    ->label('Product Price')
+                    ->icon('heroicon-o-currency-dollar'), 
+                    TextEntry::make('stock')
+                    ->label('Product Stock'), 
+                ])
+                ->columnSpanFull(), 
             ]);
     }
 }
