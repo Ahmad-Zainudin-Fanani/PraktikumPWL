@@ -6,6 +6,8 @@ use Filament\Schemas\Components\Section;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\IconEntry;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 
 class ProductInfolist
@@ -14,37 +16,44 @@ class ProductInfolist
     {
         return $schema
             ->components([
-                // SECTION 1: PRODUCT INFO
-                Section::make('Product Info')
-                ->description('')
-                ->schema([
-                    TextEntry::make('name')
-                        ->label('Product Name')
-                        ->weight('bold')
-                        ->color('primary'),
-                    TextEntry::make('id')
-                        ->label('Product ID'),
-                    TextEntry::make('sku')
-                        ->label('Product SKU')
-                        ->badge()
-                        ->color('success'),
-                    TextEntry::make('description')
-                        ->label('Product Description'),
-                    TextEntry::make('created_at')
-                        ->label('Product Creation Date')
-                        ->date('d M Y')
-                        ->color('info'),
-                    ])
-                ->columnSpanFull(),
+            // Implementasi Tabs
+            Tabs::make('Product Tabs')
+                ->tabs([
+                    Tab::make('Product Details')
+                        ->schema([
+                            TextEntry::make('name')
+                                ->label('Product Name')
+                                ->weight('bold')
+                                ->color('primary'),
+
+                            TextEntry::make('id')
+                                ->label('Product ID'),
+
+                            TextEntry::make('sku')
+                                ->label('Product SKU')
+                                ->badge()
+                                ->color('success'),
+
+                            TextEntry::make('description')
+                                ->label('Product Description'),
+
+                            TextEntry::make('created_at')
+                                ->label('Product Creation Date')
+                                ->date('d M Y')
+                                ->color('info'),
+                        ]),
+                ])->columnSpanFull(),
 
                 // SECTION 2: PRICING & STOCK
                 Section::make('Pricing & Stock')
                 ->schema([ 
                     TextEntry::make('price')
                     ->label('Product Price')
-                    ->icon('heroicon-o-currency-dollar'), 
+                    ->icon('heroicon-o-currency-dollar')
+                    ->formatStateUsing(fn (string $state): string => "Rp " . number_format($state, 0, ',', '.')),
                     TextEntry::make('stock')
-                    ->label('Product Stock'), 
+                    ->label('Product Stock')
+                    ->icon('heroicon-o-cube'),
                 ])
                 ->columnSpanFull(),
                 
