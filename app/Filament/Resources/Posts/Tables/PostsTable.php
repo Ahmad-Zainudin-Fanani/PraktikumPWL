@@ -17,11 +17,14 @@ class PostsTable
         return $table
             ->columns([
                 TextColumn::make('title')
-                ->sortable(),
+                ->sortable()
+                ->searchable(),
                 TextColumn::make('slug')
-                ->sortable(), 
+                ->sortable()
+                ->searchable(),
                 TextColumn::make('category.name')
-                ->sortable(), 
+                ->sortable()
+                ->searchable(),
                 ColorColumn::make('color'),
                 ImageColumn::make('image')
                     ->disk('public'),
@@ -29,7 +32,8 @@ class PostsTable
                 ->label('Created At')
                 ->dateTime()
                 ->sortable(),
-            ])->defaultSort('title', 'asc')
+            // ])->defaultSort('title', 'asc')
+            ])->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
