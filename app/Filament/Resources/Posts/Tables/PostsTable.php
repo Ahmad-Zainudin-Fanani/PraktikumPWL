@@ -28,8 +28,8 @@ class PostsTable
                 TextColumn::make('created_at')
                 ->label('Created At')
                 ->dateTime()
-                ->sortable(), 
-            ])
+                ->sortable(),
+            ])->defaultSort('title', 'asc')
             ->filters([
                 //
             ])
