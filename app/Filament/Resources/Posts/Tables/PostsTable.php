@@ -73,12 +73,20 @@ class PostsTable
                     ->preload(), 
             ])
             ->recordActions([
-                ReplicateAction::make(), 
-                EditAction::make(),
+                ReplicateAction::make()
+                ->icon('heroicon-o-document-duplicate')
+                ->color('info'), 
+                EditAction::make()
+                ->icon('heroicon-o-pencil-square'),
                 DeleteAction::make(),
                 Action::make('status')
                 ->label('Status Change')
                 ->icon('heroicon-o-check-circle')
+                ->color('warning')
+                ->requiresConfirmation() // Poin 4: Tambahkan Konfirmasi
+                ->modalHeading('Ubah Status Publikasi')
+                ->modalDescription('Apakah Anda yakin ingin mengubah status postingan ini?')
+                ->modalSubmitActionLabel('Simpan Perubahan')
                 ->schema([ 
                 Checkbox::make('published')
                 ->default(fn ($record):bool=>$record->published), 
