@@ -3,8 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Post;
 
 class Category extends Model
 {
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = [
+        "name",
+        "slug",
+    ];
+
+    public function post(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
 }
