@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Posts\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
@@ -68,8 +69,9 @@ class PostsTable
                     ->relationship('category', 'name')
                     ->preload(), 
             ])
-            ->actions([
+            ->recordActions([ 
                 EditAction::make(),
+                DeleteAction::make(), 
             ])
             ->bulkActions([
                 BulkActionGroup::make([
