@@ -21,6 +21,11 @@ class Post extends Model
         'published_at',
         'content',
     ];
+    
+    public function posts() 
+    { 
+        return $this->hasMany(Post::class); 
+    }
 
     protected $casts = [
         'tags' => 'array',

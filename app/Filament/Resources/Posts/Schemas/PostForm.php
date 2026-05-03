@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Posts\Schemas;
 
+use App\Models\Category;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\ColorPicker;
@@ -50,10 +51,10 @@ class PostForm
                             // POIN 1: Category wajib dipilih 
                             Select::make('category_id')
                                 ->relationship("category", "name")
-                                ->preload()
+                                ->options(Category::all()->pluck("name", "id"))
                                 ->required()
+                                // ->preload()
                                 ->searchable(),
-
                             ColorPicker::make("color"),
                         ])->columns(2),
 
